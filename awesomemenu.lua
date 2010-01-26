@@ -3,11 +3,14 @@
 require "lfs"
 require "ini"
 
-module "awesomemenu"
+module ("awesomemenu", package.seeall)
 
-function create(path = "/usr/share/applications/", terminal_cmd )
+function create( path, terminal_cmd  )
+	-- default parameters
+	if path == nil then path = "/usr/share/applications/" end
+	if terminal_cmd == nil then terminal_cmd = "urxvt -e " end
 	local systemmenu = {}
-
+	lfs.chdir(path)
 	for file in lfs.dir(path) do
 		if lfs.attributes(file).mode == "file" then
 			local myini = ini.read(file)
@@ -15,23 +18,17 @@ function create(path = "/usr/share/applications/", terminal_cmd )
 			--ini.ini_print(myini)
 
 			desk_sec = myini["Desktop Entry"]
-			if desk_sec then
+			if desk_sec and desk_sec["Exec"] then
 				-- valid .desktop file
-				if not desk_sec["Exec"] then
-					return nil
-				end
 				exec = desk_sec["Exec"]
 				if not desk_sec["Name"] then
 					return 1
 				end
 				name = desk_sec["Name"]
-			else
-				return nil
+				table.insert(systemmenu, {name, exec})
 			end
-
-			table.insert(systemmenu, {name, exec})
-			--print(name, exec)
 		end
 	end
 	return systemmenu
 end
+

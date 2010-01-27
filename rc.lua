@@ -62,17 +62,27 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
+--    tags[s] = {
+--      awful.tag({ name = "Web",  layout = layouts[1]}),
+--      awful.tag({ name = "Mail", layout = layouts[1]}),
+--      awful.tag({ name = "IM",   layout = layouts[1]}),
+--      awful.tag({ name = "Term", layout = layouts[1]}),
+--      awful.tag({ name = "Div",  layout = layouts[1]}),
+--      awful.tag({ name = "Full", layout = layouts[1]}),
+--    }
     tags[s] = awful.tag(
       { "Web", "Mail", "IM", "Term", "Div", "Full" },
       s,
       layouts[1]
     )
+--    tag[s][1].set()
+--    tag[s].setproperty(1,"layout",layouts[9])
 end
 -- }}}
 
 -- {{{ Menu
 -- Create systemmenu
-systemmenu = awesomemenu.create("/usr/share/applications/", terminal_cmd)
+systemmenu = awesomemenu.create( terminal_cmd)
 
 -- Create a laucher widget and a main menu
 myawesomemenu = {
@@ -399,8 +409,8 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
 --    { rule = { class = "MPlayer" },
---    { rule = { class = "vlc" },
---      properties = { floating = true } },
+    { rule = { class = "vlc" },
+      properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "gimp" },

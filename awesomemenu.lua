@@ -3,6 +3,7 @@
 
 require "lfs"
 require "ini"
+require "utils"
 
 module ("awesomemenu", package.seeall)
 
@@ -21,23 +22,10 @@ function create( terminal_cmd, path )
 	  path = os.getenv("XDG_DATA_DIRS")
 	  if path == nil then path = "/usr/local/share/:/usr/share/" end
 	end
-	local dirs = {}
-	local systemmenu = {}
-	local oldpos = 0
 
-	-- is there any better way to split a string intu substrings?
-	while true do
-		pos = path:find(":", oldpos+1)
-		if pos == nil then
-			--print(path:sub(oldpos+1))
-			table.insert(dirs,path:sub(oldpos+1))
-			break
-		end
-		--print(path:sub(oldpos,pos-1))
-		table.insert(dirs,path:sub(oldpos,pos-1))
-		oldpos=pos
-	end
-	
+	local systemmenu = {}
+	local dirs = stringsplit(path, ":")
+
 	for k,dir in pairs(dirs) do
 		local path = dir.."/applications/"
 		--print("search in "..path)

@@ -149,20 +149,20 @@ debugText.text = ""
 -- Initialize mem widget
 memwidget = widget({ type = "textbox" })
 -- Register widget
-vicious.register(memwidget, vicious.widgets.mem, "<span color='#ACACFF'>Mem:</span> $1% ($2MB/$3MB) ", 13)
+vicious.register(memwidget, vicious.widgets.mem, "<span color='"..beautiful.fg_widget.."'>Mem:</span> <span color='"..beautiful.fg_center_widget.."'>$1% ($2MB/$3MB)</span>  ", 13)
 memwidget:add_signal("mouse::enter", add_mem_info)
 memwidget:add_signal("mouse::leave", remove_mem_info)
 
 -- Initialize cpu widget
 cpuwidget = widget({ type = "textbox" })
 -- Register widget
-vicious.register(cpuwidget, vicious.widgets.cpu, "<span color='#ACACFF'>CPU:</span> $1%  ")
+vicious.register(cpuwidget, vicious.widgets.cpu, "<span color='"..beautiful.fg_widget.."'>CPU:</span> <span color='"..beautiful.fg_center_widget.."'>$1%</span>  ")
 cpuwidget:add_signal("mouse::enter", add_cpu_info)
 cpuwidget:add_signal("mouse::leave", remove_cpu_info)
 
 -- Initialize widget
 battxtwidget = widget({ type = "textbox", align = "right"})
-battxtwidget.text = "<span color='#ACACFF'>Bat:</span> "
+battxtwidget.text = "<span color='"..beautiful.fg_widget.."'>Bat:</span> "
 battxtwidget:add_signal("mouse::enter", add_bat_info)
 battxtwidget:add_signal("mouse::leave", remove_bat_info)
 
@@ -454,4 +454,5 @@ client.add_signal("focus", function(c) c.border_color = beautiful.border_focus e
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+os.execute("nm-applet --sm-disable &")
 

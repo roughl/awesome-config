@@ -21,8 +21,9 @@ function add_calendar(inc_offset)
     local cal = awful.util.pread("cal -m " .. datespec)
     local day = tonumber(os.date("%d"))
     cal = string.gsub(cal, "^(.-)%s*$", "%1")
+    -- mark actual day
     if offset == 0 then
-      cal = string.gsub(cal, "^(.-)"..day.."(.-)$", '%1<span color="blue">'..day.."</span>%2", 1)
+      cal = string.gsub(cal, "^(%s-%a*.-%d+.-%s)(%s-"..day..")(.-)$", '%1<span background="black" color="'..beautiful.fg_widget ..'">%2</span>%3', 1)
     end
     calendar = naughty.notify({
         text = string.format('<span font_desc="%s">%s</span>', "monospace", os.date("%a, %d %B %Y") .. "\n" .. cal),

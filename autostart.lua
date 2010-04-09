@@ -7,12 +7,11 @@ require "utils"
 
 module ("autostart", package.seeall)
 
-showIn = { "awesome" }
+showIn = { "awesome", "GNOME" }
 
-function checkShow(onlyShowIn)
+function checkShowIn(onlyShowIn)
 	-- if nil its valid for every desktop
 	if onlyShowIn == nil then return true end
-	--print("checkShow("..onlyShowIn..")")
 	for k,v in pairs(showIn) do
 		if string.find(tostring(onlyShowIn), v) then return true end
 	end
@@ -40,7 +39,7 @@ function execute(path)
 					if desk_sec and desk_sec["Exec"] and desk_sec["Name"] then
 						-- valid .desktop file
 						local onlyShowIn = desk_sec["OnlyShowIn"]
-						if checkShow(desk_sec["OnlyShowIn"]) then
+						if checkShowIn(desk_sec["OnlyShowIn"]) then
 							local exec = desk_sec["Exec"]
 							local j = exec:match("(.*)%%")
 							if j then
@@ -51,7 +50,9 @@ function execute(path)
 							if desk_sec["Terminal"] == "true" then
 								exec = terminal_cmd .. exec
 							end
-							print(name,exec,icon)
+							print(exec)
+							--os.execute("notify-send Autostart \"Starting "..name..": "..exec.."\"")
+							--os.execute(exec.."&")
 						end
 					end
 				end
@@ -59,5 +60,4 @@ function execute(path)
 		end
 	end
 end
-
 

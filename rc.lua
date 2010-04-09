@@ -14,12 +14,13 @@ end
 require("calendar")
 require("vicious")
 require("awesomemenu")
+--require("autostart")
 
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 mytheme = "/home/roughl/.config/awesome/themes/zenburn/theme.lua"
---beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+--mytheme = "/usr/share/awesome/themes/sky/theme.lua"
 beautiful.init(mytheme)
 
 -- This is used later as the default terminal and editor to run.
@@ -161,20 +162,20 @@ cpuwidget:add_signal("mouse::enter", add_cpu_info)
 cpuwidget:add_signal("mouse::leave", remove_cpu_info)
 
 -- Initialize widget
-battxtwidget = widget({ type = "textbox", align = "right"})
-battxtwidget.text = "<span color='"..beautiful.fg_widget.."'>Bat:</span> "
-battxtwidget:add_signal("mouse::enter", add_bat_info)
-battxtwidget:add_signal("mouse::leave", remove_bat_info)
+--battxtwidget = widget({ type = "textbox", align = "right"})
+--battxtwidget.text = "<span color='"..beautiful.fg_widget.."'>Bat:</span> "
+--battxtwidget:add_signal("mouse::enter", add_bat_info)
+--battxtwidget:add_signal("mouse::leave", remove_bat_info)
 
-batwidget = awful.widget.progressbar({ align = "right" })
-batwidget:set_width(8)
-batwidget:set_height(20)
-batwidget:set_vertical(true)
-batwidget:set_background_color('#494B4F')
-batwidget:set_border_color(nil)
-batwidget:set_color('#AECF96')
-batwidget:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
-vicious.register(batwidget, vicious.widgets.bat, '$2', 61, 'BAT0')
+--batwidget = awful.widget.progressbar({ align = "right" })
+--batwidget:set_width(8)
+--batwidget:set_height(20)
+--batwidget:set_vertical(true)
+--batwidget:set_background_color('#494B4F')
+--batwidget:set_border_color(nil)
+--batwidget:set_color('#AECF96')
+--batwidget:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
+--vicious.register(batwidget, vicious.widgets.bat, '$2', 61, 'BAT0')
 
 --batwidget:add_signal("mouse::enter", add_bat_info)
 --batwidget:add_signal("mouse::leave", remove_bat_info)
@@ -260,8 +261,8 @@ for s = 1, screen.count() do
 	{
 	  cpuwidget,
 	  memwidget,
-	  battxtwidget,
-	  batwidget,
+	  --battxtwidget,
+	  --batwidget,
 	  layout = awful.widget.layout.horizontal.leftright
 	},
         mytasklist[s],
@@ -454,5 +455,11 @@ client.add_signal("focus", function(c) c.border_color = beautiful.border_focus e
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-os.execute("nm-applet --sm-disable &")
+--os.execute("gnome-settings-daemon &")
+--os.execute("gnome-keyring-daemon --start &")
+--os.execute("gnome-power-manager &")
+--os.execute("nm-applet --sm-disable &")
+
+--autostart.execute()
+
 

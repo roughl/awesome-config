@@ -8,7 +8,7 @@ require("beautiful")
 require("naughty")
 
 function dprint(mytext)
-  naughty.notify({ text=tostring(mytext) })
+--  naughty.notify({ text=tostring(mytext) })
 end
 
 require("calendar")
@@ -80,6 +80,7 @@ for s = 1, screen.count() do
 --    tag[s].setproperty(1,"layout",layouts[9])
 end
 -- }}}
+dprint("tags created")
 
 -- {{{ Menu
 -- Create systemmenu
@@ -110,17 +111,17 @@ mybluetoothmenu = {
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "System", systemmenu, beautiful.arch_icon },
                                     { "Arch", myarchmenu, beautiful.arch_icon },
-				    { "Bluetooth", mybluetoothmenu, theme.bt_icon },
+                                    { "Bluetooth", mybluetoothmenu, theme.bt_icon },
                                     { "open terminal", terminal, theme.term_icon },
                                     { "musik server", terminal_cmd .. "ssh puffy" },
                                     { "firefox", "firefox" , theme.web_icon },
-			            { "weechat", terminal .." -name IRC -e weechat-curses", theme.irc_icon }, 
+                                    { "weechat", terminal .." -name IRC -e weechat-curses", theme.irc_icon }, 
                                     { "news", terminal_cmd.."newsbeuter", theme.news_icon },
-                                    { "supertux", "supertux2", theme.supertux },
                                     { "suspend", terminal_cmd .. " sudo pm-suspend" },
                                   }
                         })
 
+dprint("menu created")
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
 -- }}}
@@ -224,6 +225,8 @@ mytasklist.buttons = awful.util.table.join(
                                               awful.client.focus.byidx(-1)
                                               if client.focus then client.focus:raise() end
                                           end))
+
+dprint("tasklist created")
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen

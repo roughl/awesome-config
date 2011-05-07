@@ -22,7 +22,7 @@ function execute(path)
 	-- default parameters
 	--if terminal_cmd == nil then terminal_cmd = "urxvt -e " end
 	if path == nil then
-	  path = os.getenv("XDG_CONFIG_DIRS")
+	  path = os.getenv("XDG_CONFIG_DIRS")..":".. os.getenv("XDG_CONFIG_HOME")
 	  if path == nil then path = "/etc/xdg/" end
 	end
 	local dirs = stringsplit(path, ":")

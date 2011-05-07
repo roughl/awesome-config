@@ -7,7 +7,7 @@ require "utils"
 
 module ("autostart", package.seeall)
 
-showIn = { "awesome", "GNOME" }
+showIn = { "awesome", "XFCE" }
 
 function checkShowIn(onlyShowIn)
 	-- if nil its valid for every desktop

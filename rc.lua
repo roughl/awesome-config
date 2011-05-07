@@ -21,6 +21,8 @@ require("autostart")
 -- Themes define colours, icons, and wallpapers
 mytheme = "/home/roughl/.config/awesome/themes/zenburn/theme.lua"
 --mytheme = "/usr/share/awesome/themes/sky/theme.lua"
+--mytheme = "/usr/share/awesome/themes/default/theme.lua"
+--mytheme = "/usr/share/awesome/themes/zenburn/theme.lua"
 beautiful.init(mytheme)
 
 -- This is used later as the default terminal and editor to run.
@@ -113,7 +115,6 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "Arch", myarchmenu, beautiful.arch_icon },
                                     { "Bluetooth", mybluetoothmenu, theme.bt_icon },
                                     { "open terminal", terminal, theme.term_icon },
-                                    { "musik server", terminal_cmd .. "ssh puffy" },
                                     { "firefox", "firefox" , theme.web_icon },
                                     { "weechat", terminal .." -name IRC -e weechat-curses", theme.irc_icon }, 
                                     { "news", terminal_cmd.."newsbeuter", theme.news_icon },

@@ -7,6 +7,7 @@ function read(filename)
   local ini_table = {}
   local section = nil
   if not inifile then
+    print("file does not exist")
     return nil
   end
   for line in inifile:lines() do
@@ -17,7 +18,7 @@ function read(filename)
       section = newsection
     elseif section then
       --print(line)
-      local key,value=line:match("(.*)=(.*)")
+      local key,value=line:match("(.-)=(.*)")
       if key and value then
         ini_table[section][key] = value
       end

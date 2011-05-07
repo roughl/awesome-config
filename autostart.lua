@@ -11,9 +11,13 @@ showIn = { "awesome", "XFCE" }
 
 function checkShowIn(onlyShowIn)
 	-- if nil its valid for every desktop
-	if onlyShowIn == nil then return true end
+	if onlyShowIn == nil then
+		return true
+	end
 	for k,v in pairs(showIn) do
-		if string.find(tostring(onlyShowIn), v) then return true end
+		if string.find(tostring(onlyShowIn), v) then
+			return true
+		end
 	end
 	return false
 end

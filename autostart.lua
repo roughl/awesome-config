@@ -31,37 +31,43 @@ function execute(path)
 	end
 	local dirs = stringsplit(path, ":")
 
+	autostart_table = {}
+
 	for k,dir in pairs(dirs) do
 		local path = dir.."/autostart/"
 		print("search in "..path)
 		if lfs.chdir(path) then
 			for file in lfs.dir(path) do
 				if lfs.attributes(file).mode == "file" then
-					local myini = ini.read(file)
-					--ini.ini_print(myini)
+					local myini = ini.read(file, autostart_table[file])
 					desk_sec = myini["Desktop Entry"]
 					if desk_sec and desk_sec["Exec"] and desk_sec["Name"] then
 						-- valid .desktop file
-						local onlyShowIn = desk_sec["OnlyShowIn"]
-						if checkShowIn(desk_sec["OnlyShowIn"]) then
-							local exec = desk_sec["Exec"]
-							local j = exec:match("(.*)%%")
-							if j then
-							   exec = j
-							end
-							local name = desk_sec["Name"]
-							local icon = desk_sec["Icon"]
-							if desk_sec["Terminal"] == "true" then
-								exec = terminal_cmd .. exec
-							end
-							print(exec)
-							--os.execute("notify-send Autostart \"Starting "..name..": "..exec.."\"")
-							--os.execute(exec.."&")
-						end
+						autostart_table[file]= myini
 					end
 				end
 			end
 		end
+	end
+	for k,v in pairs(autostart_table) do
+		desk_sec = v["Desktop Entry"]
+		local onlyShowIn = desk_sec["OnlyShowIn"]
+		if checkShowIn(desk_sec["OnlyShowIn"]) then
+			local exec = desk_sec["Exec"]
+			local j = exec:match("(.*)%%")
+			if j then
+			   exec = j
+			end
+			local name = desk_sec["Name"]
+			local icon = desk_sec["Icon"]
+			if desk_sec["Terminal"] == "true" then
+				exec = terminal_cmd .. exec
+			end
+			print(exec)
+			--os.execute("notify-send Autostart \"Starting "..name..": "..exec.."\"")
+			--os.execute(exec.."&")
+		end
+		--print(k,v)
 	end
 end
 

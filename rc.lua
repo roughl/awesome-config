@@ -14,7 +14,7 @@ end
 require("calendar")
 require("vicious")
 require("awesomemenu")
---require("autostart")
+require("autostart")
 
 
 -- {{{ Variable definitions
@@ -463,6 +463,5 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 --os.execute("gnome-power-manager &")
 --os.execute("nm-applet --sm-disable &")
 
---autostart.execute()
-
+autostart.execute()
 

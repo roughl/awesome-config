@@ -7,7 +7,7 @@ require "utils"
 
 module ("autostart", package.seeall)
 
-showIn = { "awesome", "XFCE" }
+showIn = { "awesome", "GNOME" }
 
 function checkShowIn(onlyShowIn)
 	-- if nil its valid for every desktop
@@ -65,7 +65,7 @@ function execute(path)
 			end
 			print(exec)
 			--os.execute("notify-send Autostart \"Starting "..name..": "..exec.."\"")
-			--os.execute(exec.."&")
+			os.execute(exec.."&")
 		end
 		--print(k,v)
 	end

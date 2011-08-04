@@ -153,7 +153,6 @@ memwidget = widget({ type = "textbox" })
 -- Register widget
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
-	local text
 	local color = gradient(25,75,args[1], beautiful.fg_center_widget, "#FF0000")
 	return "<span color='"..beautiful.fg_widget.."'>Mem:</span><span color='"..color.."'>"..args[1].."% ("..args[2].."MB/"..args[3].."MB)</span> "
 end )
@@ -166,22 +165,10 @@ cpuwidget = widget({ type = "textbox" })
 -- Register widget
 vicious.register(cpuwidget, vicious.widgets.cpu, 
 function (widget, args)
-	local text
-	-- list only real cpu cores
-	for i=1,#args do
-		-- alerts, if system is stressed
-		if args[i] > 25 then
-			-- from light green to light red
-			local color = gradient(25,75,args[i],"#000000","#FF0000")
-			args[i] = string.format("<span color='%s'>%s</span>", color, args[i])
-		end
-
-		-- append to list
-		if i > 2 then text = text.."/"..args[i].."%"
-		else text = args[i].."%" end
-	end
-
-	return "<span color='"..beautiful.fg_widget.."'>CPU:</span>"..text.." "
+	-- two cores, we take average
+	local usage = (args[1]+args[2])/2
+	local color = gradient(25, 75, usage, "#000000", "#FF0000") 
+	return "<span color='"..beautiful.fg_widget.."'>CPU:</span><span color='"..color.."'>"..usage.."%</span> "
 end )
 
 cpuwidget:add_signal("mouse::enter", add_cpu_info)

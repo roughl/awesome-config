@@ -73,7 +73,7 @@ for s = 1, screen.count() do
 --      awful.tag({ name = "Full", layout = layouts[1]}),
 --    }
     tags[s] = awful.tag(
-      { "Web", "Mail", "IM", "Term", "Div", "Full" },
+      { "1", "2", "3", "4", "5", "6" },
       s,
       layouts[1]
     )
@@ -438,7 +438,7 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
---    { rule = { class = "MPlayer" },
+    { rule = { class = "MPlayer" },
     { rule = { class = "vlc" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },

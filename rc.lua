@@ -439,6 +439,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
+      properties = { floating = true } },
     { rule = { class = "vlc" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },

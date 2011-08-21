@@ -63,7 +63,7 @@ function execute(path)
 			if desk_sec["Terminal"] == "true" then
 				exec = terminal_cmd .. exec
 			end
-			print(exec)
+			--print(exec)
 			--os.execute("notify-send Autostart \"Starting "..name..": "..exec.."\"")
 			os.execute(exec.."&")
 		end

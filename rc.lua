@@ -19,7 +19,7 @@ require("autostart")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-mytheme = "/~/.config/awesome/themes/zenburn/theme.lua"
+mytheme = awful.util.getdir("config").."/themes/zenburn/theme.lua"
 --mytheme = "/usr/share/awesome/themes/sky/theme.lua"
 --mytheme = "/usr/share/awesome/themes/default/theme.lua"
 --mytheme = "/usr/share/awesome/themes/zenburn/theme.lua"

@@ -306,6 +306,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
+	awful.key({ modkey,           }, "e", function() awful.util.spawn("thunar") end),
+	awful.key({ modkey,           }, "a", function() awful.util.spawn(terminal_cmd.."alsamixer") end),
+	awful.key({ modkey,           }, "v", function() awful.util.spawn("vimpt") end),
+	awful.key({ modkey,           }, "i", function() awful.util.spawn("/home/roughl/bin/i") end),
+
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)

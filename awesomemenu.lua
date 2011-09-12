@@ -103,7 +103,7 @@ function create( terminal_cmd, path )
 					--ini.ini_print(myini)
 
 					desk_sec = myini["Desktop Entry"]
-					if desk_sec and desk_sec["Exec"] and desk_sec["Name"] then
+					if desk_sec and desk_sec["Exec"] and desk_sec["Name"] and desk_sec["NoDisplay"] ~= "true" then
 						-- valid .desktop file
 						local exec = desk_sec["Exec"]
 						-- remove arguments like %s from exec string

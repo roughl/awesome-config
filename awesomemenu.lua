@@ -121,14 +121,8 @@ function create( terminal_cmd, path )
 
 						local sub_table = get_category(desk_sec["Categories"], systemmenu)
 						if sub_table == nil then sub_table = systemmenu end
-						if icon then
-							table.insert(sub_table, {name, exec, icon})
-							print(name, exec, icon )
-						else
-							print("no icon")
-							table.insert(sub_table, {name, exec})
-							print(name, exec)
-						end
+						table.insert(sub_table, {name, exec, icon})
+						print(name, exec, icon )
 						print("----")
 					end
 				end

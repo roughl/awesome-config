@@ -14,7 +14,8 @@ icon_pathes = { "/usr/share/icons/hicolor/$size/apps/",
 				"/usr/share/icons/Tango/$size/apps/",
 				"/usr/share/icons/Tango/$size/categories/",
 				"/usr/share/icons/gnome/$size/status/",
-				"/usr/share/pixmaps/"
+				"/usr/share/pixmaps/",
+				"/usr/share/icons/"
 			}
 
 categories = {}

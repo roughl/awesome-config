@@ -47,14 +47,18 @@ end
 function get_icon( icon )
 	-- is icon given?
 	if icon then
+		-- svg is not supported in awesome
+		if icon:match(".svg$") then
+			return nil
+		end
 		-- some weird .desktop entrys set icon to ""
 		if icon == "" then
 			print("was empty")
-			icon = nil
+			return nil
+		end
 		-- does icon exist?
-		elseif lfs.attributes(icon) then
-		-- ok it's a full path
-
+		if lfs.attributes(icon) then
+			-- existing fullpath
 		else
 			local found = false
 			for k,path in ipairs(icon_pathes) do

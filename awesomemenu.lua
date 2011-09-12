@@ -72,6 +72,10 @@ function get_icon( icon )
 						icon = icon_path..icon..".png"
 						found = true
 						break
+					elseif lfs.attributes(icon_path..icon..".xpm") then
+						icon = icon_path..icon..".xpm"
+						found = true
+						break
 					end
 				end
 				if found then break end

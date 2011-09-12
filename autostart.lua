@@ -9,6 +9,13 @@ module ("autostart", package.seeall)
 
 showIn = { "awesome", "GNOME" }
 
+function run_once(prg)
+	if not prg then
+		do return nil end
+	end
+	awful.util.spawn_with_shell("pgrep -f -u $USER -x " .. prg .. " || (" .. prg .. ")")
+end
+
 function checkShowIn(onlyShowIn)
 	-- if nil its valid for every desktop
 	if onlyShowIn == nil then
@@ -65,7 +72,7 @@ function execute(path)
 			end
 			--print(exec)
 			--os.execute("notify-send Autostart \"Starting "..name..": "..exec.."\"")
-			os.execute(exec.."&")
+			run_once(exec)
 		end
 		--print(k,v)
 	end

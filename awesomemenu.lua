@@ -46,44 +46,37 @@ end
 -- {{{ get_icon()
 function get_icon( icon )
 	-- is icon given?
-	if icon then
-		-- svg is not supported in awesome
-		if icon:match(".svg$") then
-			return nil
-		end
-		-- some weird .desktop entrys set icon to ""
-		if icon == "" then
-			print("was empty")
-			return nil
-		end
-		-- does icon exist?
-		if lfs.attributes(icon) then
-			-- existing fullpath
-		else
-			local found = false
-			for k,path in ipairs(icon_pathes) do
-				for k,size in ipairs(sizes) do
-					local icon_path = path:gsub("$size",size)
-					if lfs.attributes(icon_path..icon) then
-						icon = icon_path..icon
-						found = true
-						break
-					elseif lfs.attributes(icon_path..icon..".png") then
-						icon = icon_path..icon..".png"
-						found = true
-						break
-					elseif lfs.attributes(icon_path..icon..".xpm") then
-						icon = icon_path..icon..".xpm"
-						found = true
-						break
-					end
-				end
-				if found then break end
+	if not icon then
+		return nil
+	end
+	-- svg is not supported in awesome
+	if icon:match(".svg$") then
+		return nil
+	end
+	-- some weird .desktop entrys set icon to ""
+	if icon == "" then
+		print("was empty")
+		return nil
+	end
+	-- does icon exist?
+	if lfs.attributes(icon) then
+		-- existing fullpath
+		return icon
+	end
+	local found = false
+	for k,path in ipairs(icon_pathes) do
+		for k,size in ipairs(sizes) do
+			local icon_path = path:gsub("$size",size)
+			if lfs.attributes(icon_path..icon) then
+				return icon_path..icon
+			elseif lfs.attributes(icon_path..icon..".png") then
+				return icon_path..icon..".png"
+			elseif lfs.attributes(icon_path..icon..".xpm") then
+				return icon_path..icon..".xpm"
 			end
-			if not found then icon = nil end
 		end
 	end
-	return icon
+	return nil
 end
 -- }}}
 

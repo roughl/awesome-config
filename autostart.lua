@@ -13,7 +13,7 @@ function run_once(prg)
 	if not prg then
 		do return nil end
 	end
-	os.execute("pgrep -f -u $USER -x \"" .. prg .. "\" || (" .. prg .. ")")
+	os.execute("pgrep -f -u $USER -x \"" .. prg .. "\" || (" .. prg .. "&)")
 end
 
 function checkShowIn(onlyShowIn)

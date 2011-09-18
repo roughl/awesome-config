@@ -95,10 +95,11 @@ function create( terminal_cmd, path )
 	for k,dir in pairs(dirs) do
 		local path = dir.."/applications/"
 		--print("search in "..path)
-		if lfs.chdir(path) then
+		if lfs.attributes(path, "mode") == "directory" then
 			for file in lfs.dir(path) do
-				if lfs.attributes(file).mode == "file" then
-					local myini = ini.read(file)
+				local filepath= path..file
+				if lfs.attributes(filepath, "mode") == "file" then
+					local myini = ini.read(filepath)
 
 					--ini.ini_print(myini)
 

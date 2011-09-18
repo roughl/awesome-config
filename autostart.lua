@@ -7,7 +7,7 @@ require "utils"
 
 module ("autostart", package.seeall)
 
-showIn = { "awesome", "GNOME" }
+showIn = { "awesome", "KDE" }
 
 function run_once(prg)
 	if not prg then
@@ -43,10 +43,12 @@ function execute(path)
 	for k,dir in pairs(dirs) do
 		local path = dir.."/autostart/"
 		print("search in "..path)
-		if lfs.chdir(path) then
+		if lfs.attributes(path, "mode") == "directory" then
 			for file in lfs.dir(path) do
-				if lfs.attributes(file).mode == "file" then
-					local myini = ini.read(file, autostart_table[file])
+				local filepath= path..file
+				if lfs.attributes(filepath, "mode") == "file" then
+					print("  found file: "..file)
+					local myini = ini.read(filepath)
 					desk_sec = myini["Desktop Entry"]
 					if desk_sec and desk_sec["Exec"] and desk_sec["Name"] then
 						-- valid .desktop file

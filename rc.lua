@@ -7,14 +7,12 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
-function dprint(mytext)
---  naughty.notify({ text=tostring(mytext) })
-end
-
 require("calendar")
 require("vicious")
 require("awesomemenu")
 require("autostart")
+
+require("utils")
 
 
 -- {{{ Variable definitions

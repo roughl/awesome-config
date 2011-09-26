@@ -1,4 +1,13 @@
 
+function dprint(...)
+	local mytext = ""
+	for i,v in ipairs(arg) do
+		mytext = mytext..tostring(v).."\t"
+	end
+	--print(mytext)
+ 	--naughty.notify({ text=mytext })
+end
+
 
 function stringsplit(string, char)
 	tokens = {}

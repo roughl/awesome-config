@@ -50,8 +50,9 @@ function get_icon( icon )
 		return nil
 	end
 	-- svg is not supported in awesome
+	-- maybe there is a png with the same name
 	if icon:match(".svg$") then
-		return nil
+		icon:gsub(".svg$",".png",1)
 	end
 	-- some weird .desktop entrys set icon to ""
 	if icon == "" then

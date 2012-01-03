@@ -151,8 +151,8 @@ memwidget = widget({ type = "textbox" })
 -- Register widget
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
-	local color = gradient(25,75,args[1], beautiful.fg_center_widget, "#FF0000")
-	return "<span color='"..beautiful.fg_widget.."'>Mem:</span><span color='"..color.."'>"..args[1].."% ("..args[2].."MB/"..args[3].."MB)</span> "
+	local color = gradient(25,75,args[1], beautiful.fg_normal, "#FF0000")
+	return "<span color='"..beautiful.fg_focus.."'>Mem:</span><span color='"..color.."'>"..args[1].."% ("..args[2].."MB/"..args[3].."MB)</span> "
 end )
 
 memwidget:add_signal("mouse::enter", add_mem_info)
@@ -164,13 +164,19 @@ cpuwidget = widget({ type = "textbox" })
 vicious.register(cpuwidget, vicious.widgets.cpu, 
 function (widget, args)
 	-- two cores, we take average
-	local usage = (args[1]+args[2])/2
-	local color = gradient(25, 75, usage, "#000000", "#FF0000") 
-	return "<span color='"..beautiful.fg_widget.."'>CPU:</span><span color='"..color.."'>"..usage.."%</span> "
+	local usage=0
+	for i=2, #args do
+		usage=usage+args[i]
+	end
+	local usage = usage/(#args-1)
+	local color = gradient(25, 75, usage, beautiful.fg_normal, "#FF0000") 
+	return "<span color='"..beautiful.fg_focus.."'>CPU:</span><span color='"..color.."'>"..usage.."%</span> "
 end )
 
 cpuwidget:add_signal("mouse::enter", add_cpu_info)
 cpuwidget:add_signal("mouse::leave", remove_cpu_info)
+
+dprint("widgets created")
 
 -- Initialize widget
 --battxtwidget = widget({ type = "textbox", align = "right"})

@@ -14,6 +14,7 @@ function run_once(prg)
 		do return nil end
 	end
 	os.execute("pgrep -f -u $USER -x \"" .. prg .. "\" || (" .. prg .. "&)")
+	--os.execute("pgrep -f -u $USER -x \"" .. prg .. "\" || (echo " .. prg .. "&)")
 end
 
 function checkShowIn(onlyShowIn)

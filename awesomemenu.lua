@@ -52,7 +52,7 @@ function get_icon( icon )
 	-- svg is not supported in awesome
 	-- maybe there is a png with the same name
 	if icon:match(".svg$") then
-		icon:gsub(".svg$",".png",1)
+		icon = icon:gsub(".svg$",".png",1)
 	end
 	-- some weird .desktop entrys set icon to ""
 	if icon == "" then

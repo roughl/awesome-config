@@ -1,7 +1,8 @@
 
 function dprint(...)
+	local args = table.pack(...)
 	local mytext = ""
-	for i,v in ipairs(arg) do
+	for i,v in ipairs(args) do
 		mytext = mytext..tostring(v).."\t"
 	end
 	--print(mytext)

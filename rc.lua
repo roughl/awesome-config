@@ -1,12 +1,12 @@
 -- Standard awesome library
 local gears = require("gears")
-local awful = require("awful")
+awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
-local beautiful = require("beautiful")
+beautiful = require("beautiful")
 -- Notification library
 naughty = require("naughty")
 local menubar = require("menubar")
@@ -18,6 +18,21 @@ require("autostart")
 
 require("utils")
 
+-- Handle runtime errors after startup
+do
+    local in_error = false
+    awesome.connect_signal("debug::error", function (err)
+        -- Make sure we don't go into an endless error loop
+        if in_error then return end
+        in_error = true
+
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "Oops, an error happened!",
+                         text = err })
+        in_error = false
+    end)
+end
+-- }}}
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -59,6 +74,14 @@ local layouts =
     --awful.layout.suit.magnifier,
     awful.layout.suit.floating
 }
+-- }}}
+
+-- {{{ Wallpaper
+if beautiful.wallpaper then
+    for s = 1, screen.count() do
+        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+    end
+end
 -- }}}
 
 -- {{{ Tags
@@ -121,10 +144,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
-mytextclock:add_signal("mouse::enter", function()
+mytextclock:connect_signal("mouse::enter", function()
   add_calendar(0)
 end)
-mytextclock:add_signal("mouse::leave", remove_calendar)
+mytextclock:connect_signal("mouse::leave", remove_calendar)
 
 mytextclock:buttons({
   button({},4, function()
@@ -148,8 +171,8 @@ function (widget, args)
 	return "<span color='"..beautiful.fg_focus.."'>Mem:</span><span color='"..color.."'>"..args[1].."% ("..args[2].."MB/"..args[3].."MB)</span> "
 end )
 
-memwidget:add_signal("mouse::enter", add_mem_info)
-memwidget:add_signal("mouse::leave", remove_mem_info)
+memwidget:connect_signal("mouse::enter", add_mem_info)
+memwidget:connect_signal("mouse::leave", remove_mem_info)
 
 -- Initialize cpu widget
 cpuwidget = wibox.widget.textbox()
@@ -166,16 +189,16 @@ function (widget, args)
 	return "<span color='"..beautiful.fg_focus.."'>CPU:</span><span color='"..color.."'>"..usage.."%</span> "
 end )
 
-cpuwidget:add_signal("mouse::enter", add_cpu_info)
-cpuwidget:add_signal("mouse::leave", remove_cpu_info)
+cpuwidget:connect_signal("mouse::enter", add_cpu_info)
+cpuwidget:connect_signal("mouse::leave", remove_cpu_info)
 
 dprint("widgets created")
 
 -- Initialize widget
 --battxtwidget = widget({ type = "textbox", align = "right"})
 --battxtwidget.text = "<span color='"..beautiful.fg_widget.."'>Bat:</span> "
---battxtwidget:add_signal("mouse::enter", add_bat_info)
---battxtwidget:add_signal("mouse::leave", remove_bat_info)
+--battxtwidget:connect_signal("mouse::enter", add_bat_info)
+--battxtwidget:connect_signal("mouse::leave", remove_bat_info)
 
 --batwidget = awful.widget.progressbar({ align = "right" })
 --batwidget:set_width(8)
@@ -187,8 +210,8 @@ dprint("widgets created")
 --batwidget:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
 --vicious.register(batwidget, vicious.widgets.bat, '$2', 61, 'BAT0')
 
---batwidget:add_signal("mouse::enter", add_bat_info)
---batwidget:add_signal("mouse::leave", remove_bat_info)
+--batwidget:connect_signal("mouse::enter", add_bat_info)
+--batwidget:connect_signal("mouse::leave", remove_bat_info)
 -- mpd widget
 mpdwidget = wibox.widget.textbox()
 --vicios.register(mpdwidget, vicious.widgets.mpd, "mpd: $1", 7)
@@ -261,9 +284,7 @@ for s = 1, screen.count() do
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
     -- Create a tasklist widget
-    mytasklist[s] = awful.widget.tasklist(function(c)
-                                              return awful.widget.tasklist.label.currenttags(c, s)
-                                          end, mytasklist.buttons)
+    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })
@@ -450,7 +471,7 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     focus = true,
+                     focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
@@ -491,10 +512,48 @@ client.connect_signal("manage", function (c, startup)
             awful.placement.no_offscreen(c)
         end
     end
+
+    local titlebars_enabled = false
+    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
+        -- Widgets that are aligned to the left
+        local left_layout = wibox.layout.fixed.horizontal()
+        left_layout:add(awful.titlebar.widget.iconwidget(c))
+
+        -- Widgets that are aligned to the right
+        local right_layout = wibox.layout.fixed.horizontal()
+        right_layout:add(awful.titlebar.widget.floatingbutton(c))
+        right_layout:add(awful.titlebar.widget.maximizedbutton(c))
+        right_layout:add(awful.titlebar.widget.stickybutton(c))
+        right_layout:add(awful.titlebar.widget.ontopbutton(c))
+        right_layout:add(awful.titlebar.widget.closebutton(c))
+
+        -- The title goes in the middle
+        local title = awful.titlebar.widget.titlewidget(c)
+        title:buttons(awful.util.table.join(
+                awful.button({ }, 1, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.move(c)
+                end),
+                awful.button({ }, 3, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.resize(c)
+                end)
+                ))
+
+        -- Now bring it all together
+        local layout = wibox.layout.align.horizontal()
+        layout:set_left(left_layout)
+        layout:set_right(right_layout)
+        layout:set_middle(title)
+
+        awful.titlebar(c):set_widget(layout)
+    end
 end)
 
-client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
 --os.execute("gnome-settings-daemon &")

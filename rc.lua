@@ -144,19 +144,13 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
-mytextclock:connect_signal("mouse::enter", function()
-  add_calendar(0)
-end)
+mytextclock:connect_signal("mouse::enter", function() add_calendar(0) end)
 mytextclock:connect_signal("mouse::leave", remove_calendar)
 
-mytextclock:buttons({
-  button({},4, function()
-    add_calendar(-1)
-  end),
-  button({},5,function()
-    add_calendar(1)
-  end),
-})
+mytextclock:buttons(awful.util.table.join(
+    awful.button({},4, function() add_calendar(-1) end),
+    awful.button({},5, function() add_calendar( 1) end)
+))
 
 
 debugText = wibox.widget.textbox()

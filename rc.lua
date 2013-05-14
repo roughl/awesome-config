@@ -328,6 +328,8 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "a", function() awful.util.spawn(terminal_cmd.."alsamixer") end),
 	awful.key({ modkey,           }, "v", function() awful.util.spawn("vimpt") end),
 	awful.key({ modkey,           }, "i", function() awful.util.spawn("/home/roughl/bin/i") end),
+
+	awful.key({                   }, "XF86ScreenSaver", function() awful.util.spawn("slock") end),
     
 	awful.key({                   }, "XF86AudioPlay", function() awful.util.spawn("mpc toggle") end),
 	awful.key({                   }, "XF86AudioMute", function() awful.util.spawn("amixer set Master toggle") end),

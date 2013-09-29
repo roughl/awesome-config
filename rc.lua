@@ -493,6 +493,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on tag number 1 of screen 1.
 	{ rule = { class = "Firefox" },
 	  properties = {tag = tags[1][1]}},
+	  { rule = { instance = "plugin-container" },
+	  properties = { floating = true } },
 	{ rule = { instance = "Download" },
 	  properties = { floating = true } },
     -- Set vimprobable to tag 1 of screen 1

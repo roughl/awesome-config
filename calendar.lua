@@ -20,15 +20,19 @@ function add_calendar(inc_offset)
     datespec = (datespec % 12 + 1) .. " " .. math.floor(datespec / 12)
     local cal = awful.util.pread("cal -m " .. datespec)
     local day = tonumber(os.date("%d"))
-    cal = string.gsub(cal, "^(.-)%s*$", "%1")
+    if day < 10 then
+        day = " "..day
+    end
+    cal = string.gsub(cal, "^%s*(.-%s.-)%s+(.-)%s*$", "%1\n%2")
     -- mark actual day
     if offset == 0 then
-      cal = string.gsub(cal, "^(%s*%a*.-%d+.-%s*)(%s"..day..")(.-)$", '%1<span background="'..beautiful.fg_normal..'" color="'..beautiful.bg_normal ..'">%2</span>%3', 1)
+      cal = string.gsub(cal, "^%s*(%a*.-%d+.-%s*)("..day..")(.-)$", '%1<span background="'..beautiful.fg_normal..'" color="'..beautiful.bg_normal ..'">%2</span>%3', 1)
     end
+    dprint(cal)
     calendar = naughty.notify({
-        text = string.format('<span font_desc="%s">%s</span>', "monospace", os.date("%a, %d %B %Y") .. "\n" .. cal),
+        text = string.format('<span font_desc="%s">%s</span>', "monospace", os.date("%a, %d ")  .. cal),
         timeout = 0, hover_timeout = 0.5,
-        width = 160,
+        width = 165,
     })
 end
 

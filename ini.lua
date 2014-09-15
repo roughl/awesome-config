@@ -7,17 +7,17 @@ function read(filename)
   local ini_table = {}
   local section = nil
   if not inifile then
-    print("file does not exist")
+    dprint("file does not exist")
     return nil
   end
   for line in inifile:lines() do
     local newsection = line:match("^%[(.*)%]") 
     if newsection then
-      --print("found section: "..newsection)
+      dprint("found section: "..newsection)
       ini_table[newsection] = {}
       section = newsection
     elseif section then
-      --print(line)
+      dprint(line)
       local key,value=line:match("(.-)=(.*)")
       if key and value then
         ini_table[section][key] = value
@@ -31,12 +31,12 @@ end
 function ini_print(ini_table)
   for k,v in pairs(ini_table) do
     if type(v) == "table" then
-      print("---".. k.."---")
+      dprint("---".. k.."---")
       for k,v in pairs(v) do
-        print(k,v)
+        dprint(k,v)
       end
     else
-      print(k,v)
+      dprint(k,v)
     end
   end
 end

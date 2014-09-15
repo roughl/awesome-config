@@ -32,7 +32,7 @@ function get_category( category, menu )
 			categories[cats[1]] = {cats[1], sub_menu}
 			table.insert(menu, categories[cats[1]])
 		end
-		print(cats[1])
+		dprint(cats[1])
 		return categories[cats[1]][2]
 	end
 
@@ -56,7 +56,7 @@ function get_icon( icon )
 	end
 	-- some weird .desktop entrys set icon to ""
 	if icon == "" then
-		print("was empty")
+		dprint("was empty")
 		return nil
 	end
 	-- does icon exist?
@@ -118,14 +118,14 @@ function create( terminal_cmd, path )
 						if desk_sec["Terminal"] == "true" then
 							exec = terminal_cmd .. exec
 						end
-						print(name,exec,icon)
+						dprint(name,exec,icon)
 						icon = get_icon(icon)
 
 						local sub_table = get_category(desk_sec["Categories"], systemmenu)
 						if sub_table == nil then sub_table = systemmenu end
 						table.insert(sub_table, {name, exec, icon})
-						print(name, exec, icon )
-						print("----")
+						dprint(name, exec, icon )
+						dprint("----")
 					end
 				end
 			end

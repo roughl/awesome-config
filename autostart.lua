@@ -43,12 +43,12 @@ function execute(path)
 
 	for k,dir in pairs(dirs) do
 		local path = dir.."/autostart/"
-		print("search in "..path)
+		dprint("search in "..path)
 		if lfs.attributes(path, "mode") == "directory" then
 			for file in lfs.dir(path) do
 				local filepath= path..file
 				if lfs.attributes(filepath, "mode") == "file" then
-					print("  found file: "..file)
+					dprint("  found file: "..file)
 					local myini = ini.read(filepath)
 					desk_sec = myini["Desktop Entry"]
 					if desk_sec and desk_sec["Exec"] and desk_sec["Name"] then
@@ -73,11 +73,11 @@ function execute(path)
 			if desk_sec["Terminal"] == "true" then
 				exec = terminal_cmd .. exec
 			end
-			--print(exec)
+			dprint(exec)
 			--os.execute("notify-send Autostart \"Starting "..name..": "..exec.."\"")
 			run_once(exec)
 		end
-		--print(k,v)
+		dprint(k,v)
 	end
 end
 

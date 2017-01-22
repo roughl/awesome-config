@@ -1,12 +1,19 @@
 
+dprint_stdout = false
+dprint_notify = false
+
 function dprint(...)
 	local args = table.pack(...)
 	local mytext = ""
 	for i,v in ipairs(args) do
 		mytext = mytext..tostring(v).."\t"
 	end
-	--print(mytext)
- 	--naughty.notify({ text=mytext })
+    if dprint_stdout then
+        print(mytext)
+    end
+    if dprint_notify then
+        naughty.notify({ text=mytext })
+    end
 end
 
 
@@ -29,14 +36,14 @@ function gradient(min, max, value, color, to_color)
 
 
 	local factor = 0
-	if (value >= max ) then 
-		factor = 1  
-	elseif (value > min ) then 
+	if (value >= max ) then
+		factor = 1
+	elseif (value > min ) then
 		factor = (value - min) / (max - min)
-	end 
+	end
 
-	local red, green, blue = color2dec(color) 
-	local to_red, to_green, to_blue = color2dec(to_color) 
+	local red, green, blue = color2dec(color)
+	local to_red, to_green, to_blue = color2dec(to_color)
 
 	red   = math.floor(red   + (factor * (to_red   - red)))
 	green = math.floor(green + (factor * (to_green - green)))

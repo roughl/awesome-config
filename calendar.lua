@@ -3,6 +3,13 @@ local offset = 0
 local bat_info = nil
 local mem_info = nil
 
+function pread(prog)
+    file = io.popen(prog)
+    output = file:read('*all')
+    file:close()
+    return output
+end
+
 function remove_calendar()
     if calendar ~= nil then
         naughty.destroy(calendar)
@@ -18,7 +25,7 @@ function add_calendar(inc_offset)
     local datespec = os.date("*t")
     datespec = datespec.year * 12 + datespec.month - 1 + offset
     datespec = (datespec % 12 + 1) .. " " .. math.floor(datespec / 12)
-    local cal = awful.util.pread("cal -m " .. datespec)
+    local cal = pread("cal -m " .. datespec)
     local day = tonumber(os.date("%d"))
     if day < 10 then
         day = " "..day
@@ -37,7 +44,7 @@ function add_calendar(inc_offset)
 end
 
 function add_bat_info()
-  local bat = awful.util.pread("acpi")
+  local bat = pread("acpi")
   bat_info = naughty.notify({ text = bat, position="top_left", timeout = 0, hover_timeout = 0.5,})
 end
 
@@ -49,8 +56,8 @@ function remove_bat_info()
 end
 
 function add_mem_info()
-  local mem = awful.util.pread("free -m")
-  mem = mem .. "\n"..awful.util.pread(" ps -Ao comm,%mem,rss --sort rss | tail")
+  local mem = pread("free -m")
+  mem = mem .. "\n"..pread(" ps -Ao comm,%mem,rss --sort rss | tail")
   mem_info = naughty.notify({
     text = string.format('<span font_desc="%s">%s</span>', "monospace", mem),
     position="top_left",
@@ -66,7 +73,7 @@ function remove_mem_info()
 end
 
 function add_cpu_info()
-  local cpu = awful.util.pread("ps -Ao comm,pcpu --sort pcpu | tail")
+  local cpu = pread("ps -Ao comm,pcpu --sort pcpu | tail")
   cpu_info = naughty.notify({
     text = string.format('<span font_desc="%s">%s</span>', "monospace", cpu),
     position="top_left",

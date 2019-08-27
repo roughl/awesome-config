@@ -30,6 +30,8 @@ function add_calendar(inc_offset)
     if day < 10 then
         day = " "..day
     end
+    -- remove rubbish bytes from the current day highlighting of cal
+    cal = string.gsub(cal, string.char(0x5f, 0x08), "")
     cal = string.gsub(cal, "^%s*(.-%s.-)%s+(.-)%s*$", "%1\n%2")
     -- mark actual day
     if offset == 0 then

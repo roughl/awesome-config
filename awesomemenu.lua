@@ -5,7 +5,7 @@ require "lfs"
 require "ini"
 require "utils"
 
-module ("awesomemenu", package.seeall)
+local awesomemenu = {}
 
 -- array of sizes; order matters
 sizes = { "16x16", "32x32", "64x64", "128x128" }
@@ -21,7 +21,7 @@ icon_pathes = { "/usr/share/icons/hicolor/$size/apps/",
 categories = {}
 
 -- {{{ get_category()
-function get_category( category, menu )
+local function get_category( category, menu )
 	if category == nil then return nil end
 	if menu == nil then return nil end
 
@@ -44,7 +44,7 @@ end
 -- }}}
 
 -- {{{ get_icon()
-function get_icon( icon )
+local function get_icon( icon )
 	-- is icon given?
 	if not icon then
 		return nil
@@ -82,7 +82,7 @@ end
 -- }}}
 
 -- {{{ create()
-function create( terminal_cmd, path )
+local function create( terminal_cmd, path )
 	-- default parameters
 	if terminal_cmd == nil then terminal_cmd = "urxvt -e " end
 	if path == nil then
@@ -133,6 +133,7 @@ function create( terminal_cmd, path )
 	end
 	return systemmenu
 end
+awesomemenu.create = create
 --}}}
 
-
+return awesomemenu

@@ -2,14 +2,14 @@
 -- vim:ts=4:sw=4
 
 require "lfs"
-require "ini"
+ini = require "ini"
 require "utils"
 
-module ("autostart", package.seeall)
+local autostart = {}
 
 showIn = { "awesome", "KDE" }
 
-function run_once(prg)
+local function run_once(prg)
 	if not prg then
 		do return nil end
 	end
@@ -17,7 +17,7 @@ function run_once(prg)
 	--os.execute("pgrep -f -u $USER -x \"" .. prg .. "\" || (echo " .. prg .. "&)")
 end
 
-function checkShowIn(onlyShowIn)
+local function checkShowIn(onlyShowIn)
 	-- if nil its valid for every desktop
 	if onlyShowIn == nil then
 		return true
@@ -30,7 +30,7 @@ function checkShowIn(onlyShowIn)
 	return false
 end
 
-function execute(path)
+local function execute(path)
 	-- default parameters
 	--if terminal_cmd == nil then terminal_cmd = "urxvt -e " end
 	if path == nil then
@@ -80,4 +80,6 @@ function execute(path)
 		dprint(k,v)
 	end
 end
+autostart.execute = execute
 
+return autostart

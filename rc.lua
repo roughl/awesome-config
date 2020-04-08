@@ -13,8 +13,8 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 
 require("calendar")
 vicious = require("vicious")
-require("awesomemenu")
-require("autostart")
+awesomemenu = require("awesomemenu")
+autostart = require("autostart")
 
 require("utils")
 

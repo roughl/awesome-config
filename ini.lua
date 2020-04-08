@@ -1,8 +1,8 @@
 #!/usr/bin/lua
 
-module( "ini", package.seeall)
+local ini = {}
 
-function read(filename)
+local function read(filename)
   local inifile = io.open(filename)
   local ini_table = {}
   local section = nil
@@ -27,8 +27,9 @@ function read(filename)
 
   return ini_table
 end
+ini.read = read
 
-function ini_print(ini_table)
+local function ini_print(ini_table)
   for k,v in pairs(ini_table) do
     if type(v) == "table" then
       dprint("---".. k.."---")
@@ -40,4 +41,6 @@ function ini_print(ini_table)
     end
   end
 end
+ini.ini_print = ini_print
 
+return ini

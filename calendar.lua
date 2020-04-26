@@ -75,7 +75,8 @@ function remove_mem_info()
 end
 
 function add_cpu_info()
-  local cpu = pread("ps -Ao comm,pcpu --sort pcpu | tail")
+  --local cpu = pread("ps -Ao comm,pcpu --sort pcpu | tail")
+  local cpu = pread("top -n1 -b | head -n20")
   cpu_info = naughty.notify({
     text = string.format('<span font_desc="%s">%s</span>', "monospace", cpu),
     position="top_left",

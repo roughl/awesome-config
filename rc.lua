@@ -620,15 +620,6 @@ awful.rules.rules = {
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
-
-    -- Set Firefox to always map on tag number 1 of screen 1.
-    { rule = { class = "Firefox" },
-    properties = { screen = 1, tag = "1" } },
-
-    -- Set vimprobable to tag 1 of screen 1
-    { rule = { class = "vimprobable" },
-    properties = {screen = 1, tag = "1"}},
-
 }
 -- }}}
 

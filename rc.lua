@@ -221,7 +221,8 @@ vicious.register(
             })
         end
         --"⚡:
-        return "Bat: " .. args[2]  .. "%"
+        local color = gradient(15, 75, charge_level, '#FF0000', '#00FF00')
+        return "<span color='"..beautiful.fg_focus.."'>Bat: </span><span color='"..color.."'>" .. args[2]  .. "%</span>"
     end,
     10,
     "BAT"

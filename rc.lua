@@ -202,10 +202,32 @@ cpuwidget:connect_signal("mouse::leave", remove_cpu_info)
 dprint("widgets created")
 
 -- Initialize widget
---battxtwidget = widget({ type = "textbox", align = "right"})
---battxtwidget.text = "<span color='"..beautiful.fg_widget.."'>Bat:</span> "
---battxtwidget:connect_signal("mouse::enter", add_bat_info)
---battxtwidget:connect_signal("mouse::leave", remove_bat_info)
+battxtwidget = wibox.widget.textbox()
+battxtwidget.text = "Bat: "
+vicious.register(
+    battxtwidget,
+    vicious.widgets.bat,
+    function(widget, args)
+        local state = args[1]
+        local charge_level = args[2]
+         if state == '-' and args[2] <= 15 then
+             naughty.notify({
+                title="BATTERY!!",
+                text="Battery left: "..args[2].."%",
+                bg="#ff0000",
+                fg="#000",
+                timeout=5,
+                border_width=5,
+            })
+        end
+        --"⚡:
+        return "Bat: " .. args[2]  .. "%"
+    end,
+    10,
+    "BAT"
+)
+battxtwidget:connect_signal("mouse::enter", add_bat_info)
+battxtwidget:connect_signal("mouse::leave", remove_bat_info)
 
 --batwidget = awful.widget.progressbar({ align = "right" })
 --batwidget:set_width(8)
@@ -219,6 +241,7 @@ dprint("widgets created")
 
 --batwidget:connect_signal("mouse::enter", add_bat_info)
 --batwidget:connect_signal("mouse::leave", remove_bat_info)
+
 -- mpd widget
 --mpdwidget = wibox.widget.textbox()
 --vicios.register(mpdwidget, vicious.widgets.mpd, "mpd: $1", 7)
@@ -322,6 +345,7 @@ awful.screen.connect_for_each_screen(function(s)
             s.mypromptbox,
             cpuwidget,
             memwidget,
+            battxtwidget,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets

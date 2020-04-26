@@ -619,7 +619,10 @@ awful.rules.rules = {
           "AlarmWindow",  -- Thunderbird's calendar.
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
-      }, properties = { floating = true }},
+      }, properties = {
+          floating = true,
+          placement = awful.placement.no_offscreen
+      }},
 }
 -- }}}
 

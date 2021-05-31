@@ -52,7 +52,7 @@ mytheme = "/usr/share/awesome/themes/default/theme.lua"
 beautiful.init(mytheme)
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvtc"
+terminal = "alacritty"
 
 terminal_cmd = terminal .. " -e "
 
